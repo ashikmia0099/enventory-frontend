@@ -28,7 +28,6 @@ import {
 import { Input } from "@/components/ui/input"
 import { useDispatch, useSelector } from "react-redux"
 import { appDispatch, rootState } from "@/redux/store"
-import { useRouter } from "next/navigation"
 import { toast, ToastContainer } from "react-toastify"
 import { getfetchCategory } from "@/redux/features/category/categorySlice"
 import { postfetchProduct } from "@/redux/features/product/productSlice"
@@ -45,8 +44,6 @@ const formSchema = z.object({
 
 export function ProduactForm() {
 
-
-
     const dispatch = useDispatch<appDispatch>();
     const { productData } = useSelector((state: rootState) => state.product);
     const { categoryData } = useSelector((state: rootState) => state.category);
@@ -56,7 +53,6 @@ export function ProduactForm() {
     }, [dispatch]);
 
     type FormData = z.infer<typeof formSchema>;
-
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema) as any,
@@ -71,7 +67,6 @@ export function ProduactForm() {
     });
 
     async function onSubmit(data: z.infer<typeof formSchema>) {
-
         try {
             await dispatch(postfetchProduct(data)).unwrap()
             toast.success("Producat add successfully.")
@@ -102,7 +97,6 @@ export function ProduactForm() {
                                                 <SelectTrigger>
                                                     <SelectValue placeholder="Select Category" />
                                                 </SelectTrigger>
-
                                                 <SelectContent>
                                                     <SelectGroup>
                                                         {categoryData.map((cat: any) => (

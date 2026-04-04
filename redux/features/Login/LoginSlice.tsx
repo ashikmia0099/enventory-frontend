@@ -5,7 +5,6 @@ interface LoginData {
     password: string
 }
 
-
 interface User {
     id: string;
     name: string;
@@ -19,11 +18,9 @@ interface LoginState {
     error: string | null
 }
 
-
 // user auto resote from localStorage
 
 const authFromStorage = typeof window !== "undefined" ? localStorage.getItem("auth") : null;
-
 
 const initialState: LoginState = {
     user: authFromStorage ? JSON.parse(authFromStorage).user : null,

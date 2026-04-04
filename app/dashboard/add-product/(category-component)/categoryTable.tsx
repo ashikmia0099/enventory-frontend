@@ -11,11 +11,10 @@ import {
 import { getfetchCategory } from "@/redux/features/category/categorySlice";
 import { appDispatch, rootState } from "@/redux/store";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 export function CategoryTable() {
-
 
   const dispatch = useDispatch<appDispatch>();
   const { categoryData } = useSelector((state: rootState) => state.category);
@@ -29,15 +28,14 @@ export function CategoryTable() {
   return (
     <div className=" py-6 px-5">
       <div className=" mb-5 ">
-       <Link href={"/dashboard/category/category-form"}>
-        <Button className=" text-sm cursor-pointer w-40 rounded-md bg-[#E5E5E5] text-black font-bold hover:bg-[#E5E5E5]">
-          Add new category
-        </Button>
-       </Link>
+        <Link href={"/dashboard/category/category-form"}>
+          <Button className=" text-sm cursor-pointer w-40 rounded-md bg-[#E5E5E5] text-black font-bold hover:bg-[#E5E5E5]">
+            Add new category
+          </Button>
+        </Link>
       </div>
       <div>
         <Table className=" px-5">
-
           <TableHeader className=" bg-[#cfcdcd] px-10 ">
             <TableRow className=" h-14 rounded-t-md">
               <TableHead className="w-40 text-center">Index</TableHead>

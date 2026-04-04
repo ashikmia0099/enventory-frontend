@@ -7,7 +7,6 @@ interface order {
     status: string;
     createdAt: string;
     updatedAt: string;
-
 }
 
 interface orderState {
@@ -15,7 +14,6 @@ interface orderState {
     loading: boolean;
     error: string | null
 }
-
 
 const initialState: orderState = {
     orderData: [],

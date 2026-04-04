@@ -1,18 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 
-// id        String   @id @default(uuid())
-//     order     Order    @relation(fields: [orderId], references: [id])
-//     orderId   String
-//     product   Products @relation(fields: [productId], references: [id])
-//     productId String
-//     quantity  Int
-//     price     Int
-//     subTotal  Int
-//     createdAt DateTime @default(now())
-//     updatedAt DateTime @default(now())
-
-
 interface orderItem {
     id: string;
     quantity: number;
@@ -110,14 +98,7 @@ const orderItemSlice = createSlice({
                 state.error = action.error.message;
             })
 
-        // delete api lifecycle
-
-        // .addCase(deletefetchDonationFAQ.fulfilled, (state, action) => {
-        //     state.donationFAQ = state.donationFAQ.filter(item => item.id !== action.payload)
-        // })
-        // .addCase(deletefetchDonationFAQ.rejected, (state, action) => {
-        //     state.error = action.payload || action.error.message
-        // })
+        
     }
 });
 

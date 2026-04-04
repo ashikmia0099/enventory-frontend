@@ -1,4 +1,3 @@
-import React from 'react'
 import { User } from './(User-Component)/User'
 
 export default function UserPage() {

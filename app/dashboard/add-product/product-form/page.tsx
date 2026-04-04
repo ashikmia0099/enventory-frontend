@@ -1,4 +1,3 @@
-import React from 'react'
 import { ProduactForm } from './(product-form-component)/product-post-form'
 
 function page() {

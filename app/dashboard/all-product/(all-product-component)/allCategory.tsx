@@ -6,16 +6,12 @@ import { useDispatch, useSelector } from 'react-redux';
 
 export default function AllCategory() {
 
-
-
     const dispatch = useDispatch<appDispatch>();
     const { categoryData } = useSelector((state: rootState) => state.category);
 
     useEffect(() => {
         dispatch(getfetchCategory())
     }, [dispatch])
-
-
 
     return (
         <div className=' pt-10 px-10 border-b-2 pb-10 mx-5'>

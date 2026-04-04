@@ -16,16 +16,12 @@ import { useDispatch, useSelector } from "react-redux";
 
 export function OrderTable() {
 
-
     const dispatch = useDispatch<appDispatch>();
     const { orderData } = useSelector((state: rootState) => state.order);
-
 
     useEffect(() => {
         dispatch(getfetchOrder())
     }, [dispatch])
-
-
 
     return (
         <div className=" py-6 px-5">
@@ -38,7 +34,6 @@ export function OrderTable() {
             </div>
             <div>
                 <Table className=" px-5">
-
                     <TableHeader className=" bg-[#cfcdcd] px-10 ">
                         <TableRow className=" h-14 rounded-t-md">
                             <TableHead className="w-40 text-center">Index</TableHead>

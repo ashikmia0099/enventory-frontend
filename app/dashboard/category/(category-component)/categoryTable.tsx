@@ -16,14 +16,12 @@ import { useDispatch, useSelector } from "react-redux";
 
 export function CategoryTable() {
 
-
   const dispatch = useDispatch<appDispatch>();
   const { categoryData } = useSelector((state: rootState) => state.category);
 
   useEffect(() => {
     dispatch(getfetchCategory())
   }, [dispatch])
-
 
 
   return (
@@ -37,7 +35,6 @@ export function CategoryTable() {
       </div>
       <div>
         <Table className=" px-5">
-
           <TableHeader className=" bg-[#cfcdcd] px-10 ">
             <TableRow className=" h-14 rounded-t-md">
               <TableHead className="w-40 text-center">Index</TableHead>

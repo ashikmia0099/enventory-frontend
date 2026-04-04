@@ -11,21 +11,17 @@ import {
 import { getfetchProduct } from "@/redux/features/product/productSlice";
 import { appDispatch, rootState } from "@/redux/store";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 export function ProductTable() {
 
-
     const dispatch = useDispatch<appDispatch>();
     const { productData } = useSelector((state: rootState) => state.product);
-
 
     useEffect(() => {
         dispatch(getfetchProduct())
     }, [dispatch])
-
-
 
     return (
         <div className=" py-6 px-5">
@@ -38,7 +34,6 @@ export function ProductTable() {
             </div>
             <div>
                 <Table className=" px-5">
-
                     <TableHeader className=" bg-[#cfcdcd] px-10 ">
                         <TableRow className=" h-14 rounded-t-md">
                             <TableHead className="w-40 text-center">Index</TableHead>

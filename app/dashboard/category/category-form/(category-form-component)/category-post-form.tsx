@@ -1,10 +1,8 @@
 "use client"
 
-import * as React from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Controller, useForm } from "react-hook-form"
 import * as z from "zod"
-
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -20,7 +18,6 @@ import {
 import { Input } from "@/components/ui/input"
 import { useDispatch, useSelector } from "react-redux"
 import { appDispatch, rootState } from "@/redux/store"
-import { useRouter } from "next/navigation"
 import { toast, ToastContainer } from "react-toastify"
 import { postfetchCategory } from "@/redux/features/category/categorySlice"
 
@@ -31,12 +28,10 @@ const formSchema = z.object({
 export function CategoryForm() {
 
 
-
   const dispatch = useDispatch<appDispatch>();
   const { categoryData, loading, error } = useSelector((state: rootState) => state.category);
 
   type FormData = z.infer<typeof formSchema>;
-
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema) as any,

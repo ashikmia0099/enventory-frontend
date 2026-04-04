@@ -121,6 +121,19 @@ export default function Sidebar() {
                     </div>
                 </Link>
             </div>
+             {/* daily order */}
+            <div>
+                <Link href={"/dashboard/daily-order"}>
+                    <div className=' flex items-center gap-x-2 border border-gray-300 rounded-sm px-1 py-0.5'>
+                        <div>
+                            <FcPackage className=' text-3xl text-black' />
+                        </div>
+                        <div className=''>
+                            <h4 className=' text-[16px] text-black font-semibold'>Daily Order (Date or Status)</h4>
+                        </div>
+                    </div>
+                </Link>
+            </div>
              {/* stock handeling */}
             <div>
                 <Link href={"/dashboard/Seleted-Package"}>

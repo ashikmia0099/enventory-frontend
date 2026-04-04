@@ -9,14 +9,12 @@ import { getfetchProduct } from '@/redux/features/product/productSlice'
 
 export default function AllProduct() {
 
-
   const dispatch = useDispatch<appDispatch>();
   const { productData } = useSelector((state: rootState) => state.product);
 
   React.useEffect(() => {
     dispatch(getfetchProduct());
   }, [dispatch]);
-
 
 
   return (

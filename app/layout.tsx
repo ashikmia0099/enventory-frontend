@@ -10,7 +10,7 @@ import { store } from "@/redux/store";
 const lora = Lora({
   subsets: ['latin'],
   weight: ['400', '500', '600', '700'],
-  style: ['normal'], // ✅ Use normal style instead of italic
+  style: ['normal'],
   variable: '--font-lora',
 });
 

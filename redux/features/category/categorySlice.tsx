@@ -1,10 +1,8 @@
-const { createSlice, createAsyncThunk } = require("@reduxjs/toolkit")
-
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 interface Category {
     id: string;
     categoryName: string;
 }
-
 
 interface CategoryState {
     categoryData: Category[];
@@ -19,7 +17,6 @@ const initialState: CategoryState = {
 
 }
 
-
 // get fetch 
 export const getfetchCategory = createAsyncThunk(
     "category/getfetchCategory",
@@ -31,11 +28,10 @@ export const getfetchCategory = createAsyncThunk(
 
 // post fetch 
 
-export const postfetchCategory = createAsyncThunk(
+export const postfetchCategory = createAsyncThunk<any,any,{ rejectValue: string }>(
     "category/postfetchCategory",
-    async (formData: any, { rejectWithValue }) => {
+    async (formData, { rejectWithValue }) => {
         try {
-            console.log("this is redux site faq", formData)
             const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/category`, {
                 method: "POST",
                 headers: {
@@ -43,20 +39,43 @@ export const postfetchCategory = createAsyncThunk(
                 },
                 body: JSON.stringify(formData),
             });
+
             const data = await res.json();
 
             if (!res.ok) {
-                throw new Error(data.message || "Faild to post")
+                return rejectWithValue(data.message || "Failed to post");
             }
-            return data
+
+            return data;
         } catch (error: any) {
-            return rejectWithValue(error.message)
+            return rejectWithValue(error.message);
         }
     }
-)
+);
 
+// export const postfetchCategory = createAsyncThunk (
+//     "category/postfetchCategory",
+//     async (formData: any, { rejectWithValue }) => {
+//         try {
+//             console.log("this is redux site faq", formData)
+//             const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/category`, {
+//                 method: "POST",
+//                 headers: {
+//                     "Content-Type": "application/json",
+//                 },
+//                 body: JSON.stringify(formData),
+//             });
+//             const data = await res.json();
 
-
+//             if (!res.ok) {
+//                 throw new Error(data.message || "Faild to post")
+//             }
+//             return data
+//         } catch (error: any) {
+//             return rejectWithValue(error.message)
+//         }
+//     }
+// )
 
 
 const categorySlice = createSlice({
@@ -95,14 +114,6 @@ const categorySlice = createSlice({
                 state.error = action.error.message;
             })
 
-        // delete api lifecycle
-
-        // .addCase(deletefetchDonationFAQ.fulfilled, (state, action) => {
-        //     state.donationFAQ = state.donationFAQ.filter(item => item.id !== action.payload)
-        // })
-        // .addCase(deletefetchDonationFAQ.rejected, (state, action) => {
-        //     state.error = action.payload || action.error.message
-        // })
     }
 });
 

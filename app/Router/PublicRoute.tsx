@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 
 interface RouteGuardProps {
     children: React.ReactNode;
-    publicPage?: boolean; // login/register page
+    publicPage?: boolean;
 }
 
 export default function PublicRoute({ children, publicPage }: RouteGuardProps) {

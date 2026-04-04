@@ -69,7 +69,6 @@ const RegisterSlice = createSlice({
         state.loading = false;
         state.error = action.payload ?? "Something want wrong"
     })
-   
    }
 })
 
