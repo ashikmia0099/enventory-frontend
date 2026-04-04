@@ -146,7 +146,7 @@ export function OrderManagmentTable() {
                 quantity: p.quentity,
             }));
 
-            const res = await fetch("http://localhost:5000/order/item", {
+            const res = await fetch("https://envetory-api.vercel.app/order/item", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

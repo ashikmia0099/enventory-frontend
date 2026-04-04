@@ -46,7 +46,7 @@ export function DailyOrder() {
 
     useEffect(() => {
 
-        fetch(`http://localhost:5000/order/filter`)
+        fetch(`https://envetory-api.vercel.app/order/filter`)
             .then(res => res.json())
             .then(data => setOrders(data.data))
             .catch(err => console.error(err));

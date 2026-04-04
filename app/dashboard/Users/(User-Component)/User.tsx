@@ -23,7 +23,7 @@ export function User() {
   const [users, setUsers] = useState<User[]>([])
 
   useEffect(()=>{
-    fetch("http://localhost:5000/auth/users")
+    fetch("https://envetory-api.vercel.app/auth/users")
     .then((res) => res.json())
     .then((data) =>{
       setUsers(data.data)
