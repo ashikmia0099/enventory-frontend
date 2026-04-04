@@ -40,11 +40,11 @@ interface Product {
 }
 
 enum OrderStatus {
-    Pending,
-    Confirmed,
-    Shipped,
-    Delivered,
-    Cancelled
+    Pending = "Pending",
+    Confirmed = "Confirmed",
+    Shipped = "Shipped",
+    Delivered = "Delivered",
+    Cancelled = "Cancelled"
 }
 
 interface Order {
