@@ -80,7 +80,7 @@ export function DailyOrder() {
                                 {date ? date.toLocaleDateString() : "Select Date"}
                             </button>
                         </PopoverTrigger>
-                        <PopoverContent className="mx-auto p-3 h-60 w-60 rounded-xl shadow-md bg-[#061f27ee]">
+                        <PopoverContent className="mx-auto p-3  rounded-xl shadow-md bg-[#ffff]">
                             <Calendar
                                 mode="single"
                                 selected={date}
