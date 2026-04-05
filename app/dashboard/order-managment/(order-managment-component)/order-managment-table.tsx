@@ -51,7 +51,7 @@ interface Order {
     id: string;
     customerName: string;
     totalPrice: number;
-    status: OrderStatus;
+    status: string;
 }
 
 interface selectedProduct {
@@ -133,6 +133,12 @@ export function OrderManagmentTable() {
     };
 
 
+    // filter delivered order 
+
+  const pendingOrders = orderData.filter(
+    (order) => orderStatusState[order.id] !== "Delivered" && order.status !== "Delivered"
+);
+
     const handleCompleteOrder = async (orderId: string) => {
         try {
             const products = selectedProduct[orderId] || [];
@@ -188,7 +194,7 @@ export function OrderManagmentTable() {
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {orderData.map((order: any, index: any) => {
+                        {pendingOrders.map((order: any, index: any) => {
                             const filterProduct = productData.filter(
                                 p => p.categoryId === selectedCategory[order.id]
                             );
