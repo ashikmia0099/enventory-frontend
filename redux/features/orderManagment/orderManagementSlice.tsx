@@ -97,8 +97,6 @@ const orderItemSlice = createSlice({
                 state.loading = false;
                 state.error = action.error.message;
             })
-
-        
     }
 });
 

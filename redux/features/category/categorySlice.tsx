@@ -53,30 +53,6 @@ export const postfetchCategory = createAsyncThunk<any,any,{ rejectValue: string 
     }
 );
 
-// export const postfetchCategory = createAsyncThunk (
-//     "category/postfetchCategory",
-//     async (formData: any, { rejectWithValue }) => {
-//         try {
-//             console.log("this is redux site faq", formData)
-//             const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/category`, {
-//                 method: "POST",
-//                 headers: {
-//                     "Content-Type": "application/json",
-//                 },
-//                 body: JSON.stringify(formData),
-//             });
-//             const data = await res.json();
-
-//             if (!res.ok) {
-//                 throw new Error(data.message || "Faild to post")
-//             }
-//             return data
-//         } catch (error: any) {
-//             return rejectWithValue(error.message)
-//         }
-//     }
-// )
-
 
 const categorySlice = createSlice({
     name: "category",

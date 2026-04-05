@@ -1,104 +1,76 @@
 "use client"
 
-import * as React from "react"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { Controller, useForm } from "react-hook-form"
-import * as z from "zod"
-import { Button } from "@/components/ui/button"
-import {
-    Card,
-    CardContent,
-    CardFooter,
-} from "@/components/ui/card"
-import {
-    Field,
-    FieldError,
-    FieldGroup,
-    FieldLabel,
-} from "@/components/ui/field"
-import { Input } from "@/components/ui/input"
-import { useDispatch, useSelector } from "react-redux"
-import { appDispatch, rootState } from "@/redux/store"
-import { toast, ToastContainer } from "react-toastify"
-import { getfetchOrder, postfetchOrder } from "@/redux/features/order/orderSlice"
-import { useRouter } from "next/navigation"
+import * as React from "react";
+import { useForm } from "react-hook-form";
+import Swal from "sweetalert2";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Field, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
 
-const formSchema = z.object({
-    customerName: z.string(),
-});
+type FormData = {
+  customerName: string;
+};
 
 export function OrderForm() {
+  const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<FormData>();
 
-    const router = useRouter()
-    const dispatch = useDispatch<appDispatch>();
-    const { orderData } = useSelector((state: rootState) => state.order);
+  const onSubmit = async (data: FormData) => {
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/order`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
 
-    React.useEffect(() => {
-        dispatch(getfetchOrder())
-    }, [dispatch])
+      const result = await res.json();
 
-    type FormData = z.infer<typeof formSchema>;
+      if (!res.ok) throw new Error(result.message || "Failed to post");
 
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema) as any,
-        defaultValues: {
-            customerName: ""
-        },
-    });
+      Swal.fire({
+        title: "Order added successfully!",
+        icon: "success",
+        draggable: true,
+      });
 
-    async function onSubmit(data: z.infer<typeof formSchema>) {
-        try {
-            await dispatch(postfetchOrder(data)).unwrap()
-             toast.success("Stock updated successfully");
-        }
-        catch (err: any) {
-            toast.error(err || "Something want wrong")
-        }
+      reset();
+    } catch (err: any) {
+      Swal.fire({
+        title: "Error",
+        text: err.message || "Something went wrong",
+        icon: "error",
+        draggable: true,
+      });
     }
+  };
 
-    return (
-        <div>
-            <ToastContainer />
-            <div>
-                <h1 className=" text-2xl font-semibold py-10 text-center">Add New Order</h1>
-            </div>
-            <div>
-                <Card className="w-full sm:max-w-2xl mx-auto h-full">
-                    <CardContent>
-                        <form id="form-rhf-demo" onSubmit={form.handleSubmit(onSubmit)}>
-                            <FieldGroup>
-                                <Controller
-                                    name="customerName"
-                                    control={form.control}
-                                    render={({ field, fieldState }) => (
-                                        <Field data-invalid={fieldState.invalid}>
-                                            <FieldLabel htmlFor="form-rhf-demo-title">
-                                                Customer Name
-                                            </FieldLabel>
-                                            <Input
-                                                {...field}
-                                                id="form-rhf-demo-title"
-                                                aria-invalid={fieldState.invalid}
-                                                placeholder="Customer Name"
-                                                autoComplete="off" />
-                                            {fieldState.invalid && (
-                                                <FieldError errors={[fieldState.error]} />
-                                            )}
-                                        </Field>
-                                    )}
-                                />
-                            </FieldGroup>
-                        </form>
-                    </CardContent>
-                    <CardFooter>
-                        <Field orientation="horizontal">
-                            <Button type="submit" className=" w-full rounded-full cursor-pointer" form="form-rhf-demo">
-                                Submit
-                            </Button>
-                        </Field>
-                    </CardFooter>
-                </Card>
-            </div>
-        </div>
-    )
+  return (
+    <div>
+      <h1 className="text-2xl font-semibold py-10 text-center">Add New Order</h1>
+
+      <Card className="w-full sm:max-w-2xl mx-auto h-full">
+        <CardContent>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <FieldGroup>
+              <Field data-invalid={!!errors.customerName}>
+                <FieldLabel>Customer Name</FieldLabel>
+                <Input
+                  {...register("customerName", { required: "Customer Name is required" })}
+                  placeholder="Customer Name"
+                  autoComplete="off"
+                />
+                {errors.customerName && <FieldError errors={[errors.customerName]} />}
+              </Field>
+            </FieldGroup>
+          </form>
+        </CardContent>
+
+        <CardFooter>
+          <Button type="submit" className="w-full rounded-full" onClick={handleSubmit(onSubmit)} disabled={isSubmitting}>
+            {isSubmitting ? "Submitting..." : "Submit"}
+          </Button>
+        </CardFooter>
+      </Card>
+    </div>
+  );
 }

@@ -33,28 +33,28 @@ export const getfetchOrder = createAsyncThunk(
 
 // post fetch
 export const postfetchOrder = createAsyncThunk(
-  "order/postfetchOrder",
-  async (formData: any, { rejectWithValue }) => {
-    try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/order`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ customerName: formData.customerName }),
-      });
+    "order/postfetchOrder",
+    async (formData: any, { rejectWithValue }) => {
+        try {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/order`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ customerName: formData.customerName }),
+            });
 
-      const result = await res.json(); // backend response
+            const result = await res.json();
 
-      if (!res.ok) {
-        throw new Error(result.message || "Failed to post");
-      }
+            if (!res.ok) throw new Error(result.message || "Failed to post");
 
-      return result.data; // <<< only the array
-    } catch (error: any) {
-      return rejectWithValue(error.message);
+            if (Array.isArray(result.data)) return result.data;
+            if (result.data) return [result.data];
+            return []; 
+
+        } catch (error: any) {
+            return rejectWithValue(error.message);
+        }
     }
-  }
 );
-
 
 
 const orderSlice = createSlice({
@@ -86,27 +86,14 @@ const orderSlice = createSlice({
             })
             .addCase(postfetchOrder.fulfilled, (state: any, action: any) => {
                 state.loading = false;
-                // action.payload is already the array containing the new order(s)
-                // If backend returns a single object, wrap it in array
-                if (Array.isArray(action.payload)) {
-                    state.orderData.push(...action.payload); // spread array
-                } else {
-                    state.orderData.push(action.payload); // single object
-                }
+                if (!action.payload) return;     
+                if (!state.orderData) state.orderData = [];
+                state.orderData.push(...action.payload);
             })
             .addCase(postfetchOrder.rejected, (state: any, action: any) => {
                 state.loading = false;
                 state.error = action.error.message;
             })
-
-        // delete api lifecycle
-
-        // .addCase(deletefetchDonationFAQ.fulfilled, (state, action) => {
-        //     state.donationFAQ = state.donationFAQ.filter(item => item.id !== action.payload)
-        // })
-        // .addCase(deletefetchDonationFAQ.rejected, (state, action) => {
-        //     state.error = action.payload || action.error.message
-        // })
     }
 });
 
