@@ -49,7 +49,7 @@ export function OrderForm() {
     async function onSubmit(data: z.infer<typeof formSchema>) {
         try {
             await dispatch(postfetchOrder(data)).unwrap()
-            router.push("/dashboard/order")
+             toast.success("Stock updated successfully");
         }
         catch (err: any) {
             toast.error(err || "Something want wrong")
