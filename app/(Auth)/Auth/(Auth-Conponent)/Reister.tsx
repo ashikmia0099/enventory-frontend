@@ -47,7 +47,7 @@ export function Register() {
 
     try {
       await dispatch(registerUser(data)).unwrap()
-      toast.success("Registation Successfully")
+      toast.success("Registation successfull, please check and verify your email")
     }
     catch (err: any) {
       toast.error(err || "Something want wrong")
