@@ -11,10 +11,10 @@ import { useEffect, useState } from "react"
 
 
 interface User {
-  id : string
-  name : string,
-  email : string,
-  role :string
+  id: string
+  name: string,
+  email: string,
+  role: string
 }
 
 export function User() {
@@ -22,19 +22,18 @@ export function User() {
 
   const [users, setUsers] = useState<User[]>([])
 
-  useEffect(()=>{
-    fetch("https://envetory-api.vercel.app/auth/users")
-    .then((res) => res.json())
-    .then((data) =>{
-      setUsers(data.data)
-    })
-  },[])
+  useEffect(() => {
+    fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth`)
+      .then((res) => res.json())
+      .then((data) => {
+        setUsers(data.data)
+      })
+  }, [])
 
-  console.log("This is user all data", users)
 
   return (
     <Table className=" px-5">
-     
+
       <TableHeader className=" bg-[#cfcdcd]">
         <TableRow className=" grid-cols-12">
           <TableHead className=" col-span-1">Index</TableHead>
