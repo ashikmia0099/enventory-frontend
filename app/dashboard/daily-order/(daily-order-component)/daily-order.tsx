@@ -35,22 +35,49 @@ interface Order {
     createdAt: string
 }
 
+enum OrderStatus {
+    Pending = "Pending",
+    Confirmed = "Confirmed",
+    Shipped = "Shipped",
+    Delivered = "Delivered",
+    Cancelled = "Cancelled",
+}
+
 export function DailyOrder() {
 
     const dispatch = useDispatch<appDispatch>();
     const { orderData } = useSelector((state: rootState) => state.order);
     const { productData } = useSelector((state: rootState) => state.product);
-    const [date, setDate] = React.useState<Date>()
+
     const [orders, setOrders] = useState<Order[]>([]);
+    const [date, setDate] = React.useState<Date | undefined>()
+    const [selectedStatus, setselectedStatus] = useState<string>("");
     const [selectedDate, setSelectedDate] = useState<string>("");
 
-    useEffect(() => {
 
-        fetch(`https://envetory-api.vercel.app/order/filter`)
-            .then(res => res.json())
-            .then(data => setOrders(data.data))
-            .catch(err => console.error(err));
+    const fetchOrder = async (status?: string, date?: string) => {
+    try {
+        let url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/order/filter`;
+
+        const params = new URLSearchParams();
+
+        if (status) params.append("status", status);
+        if (date) params.append("date", date);
+
+        url += `?${params.toString()}`;
+
+        const res = await fetch(url);
+        const data = await res.json();
+
+        setOrders(data.data || []);
+    } catch (error) {
+        console.error(error);
+    }
+};
+    useEffect(() => {
+        fetchOrder()
     }, []);
+
 
 
     return (
@@ -60,15 +87,21 @@ export function DailyOrder() {
             </div>
             <div className=" flex pb-3 gap-x-3">
                 <div>
-                    <Select>
+                    <Select
+                        onValueChange={(value) => {
+                            setselectedStatus(value)
+                            fetchOrder(value, selectedDate)
+                        }}>
                         <SelectTrigger className="w-40">
                             <SelectValue placeholder="Select Status" />
                         </SelectTrigger>
                         <SelectContent>
                             <SelectGroup>
-                                <SelectItem value="light">Light</SelectItem>
-                                <SelectItem value="dark">Dark</SelectItem>
-                                <SelectItem value="system">System</SelectItem>
+                                {
+                                    Object.values(OrderStatus).map((status) => (
+                                        <SelectItem key={status} value={status}>{status}</SelectItem>
+                                    ))
+                                }
                             </SelectGroup>
                         </SelectContent>
                     </Select>
@@ -81,13 +114,21 @@ export function DailyOrder() {
                             </button>
                         </PopoverTrigger>
                         <PopoverContent className="mx-auto p-3  rounded-xl shadow-md bg-[#ffff]">
-                            <Calendar
-                                mode="single"
-                                selected={date}
-                                onSelect={setDate}
-                                className="rounded-lg border w-full"
-                                captionLayout="dropdown"
-                            />
+                             <Calendar
+                            mode="single"
+                            selected={date}
+                            onSelect={(selected) => {
+                                setDate(selected)
+
+                                if (selected) {
+                                    const formatted = selected.toISOString().split("T")[0]
+                                    setSelectedDate(formatted)
+
+                                    fetchOrder(selectedStatus, formatted)
+                                }
+                            }}
+                            className="rounded-md border"
+                        />
                         </PopoverContent>
                     </Popover>
                 </div>
@@ -105,15 +146,34 @@ export function DailyOrder() {
                     </TableHeader>
                     <TableBody>
                         {
-                            orders.map((order, index) => (
-                                <TableRow >
-                                    <TableCell className=" text-center">{index + 1}</TableCell>
-                                    <TableCell className=" text-center">{order.customerName}</TableCell>
-                                    <TableCell className=" text-center">{order.totalPrice}</TableCell>
-                                    <TableCell className=" text-center">{order.status}</TableCell>
-                                    <TableCell className=" text-center">{new Date(order.createdAt).toLocaleDateString()}</TableCell>
+                            orders.length > 0 ? (
+
+                                orders.map((order, index) => (
+                                    <TableRow key={order.id}>
+                                        <TableCell className="text-center">{index + 1}</TableCell>
+                                        <TableCell className="text-center">{order.customerName}</TableCell>
+                                        <TableCell className="text-center">${order.totalPrice}</TableCell>
+                                        <TableCell className="text-center">{order.status}</TableCell>
+                                        <TableCell className="text-center">
+                                            {new Date(order.createdAt).toLocaleDateString()}
+                                        </TableCell>
+                                    </TableRow>
+                                ))
+                            ) : (
+                                <TableRow>
+                                    <TableCell colSpan={5} className="text-center text-red-500 py-5">
+                                        {
+                                            selectedStatus && selectedDate
+                                                ? "This status & date data not available"
+                                                : selectedStatus
+                                                    ? "This status data not available"
+                                                    : selectedDate
+                                                        ? "This date data not available"
+                                                        : "No data found"
+                                        }
+                                    </TableCell>
                                 </TableRow>
-                            ))
+                            )
                         }
                     </TableBody>
                 </Table>
