@@ -135,39 +135,52 @@ export function OrderManagmentTable() {
 
     // filter delivered order 
 
-  const pendingOrders = orderData.filter(
-    (order) => orderStatusState[order.id] !== "Delivered" && order.status !== "Delivered"
-);
+    const pendingOrders = orderData.filter(
+        (order) => order.status !== "Delivered"
+    );
 
     const handleCompleteOrder = async (orderId: string) => {
         try {
             const products = selectedProduct[orderId] || [];
+            const newStatus = orderStatusState[orderId] || "Pending";
 
             if (products.length === 0) {
                 alert("No product selected!");
                 return;
             }
+
             const items = products.map(p => ({
                 productId: p.productId,
                 quantity: p.quentity,
             }));
+
             const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/order/item`, {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     orderId,
                     items,
-                    status: orderStatusState[orderId] || "Pending"
+                    status: newStatus
                 })
             });
+
             const data = await res.json();
-            Swal.fire({
-                title: "Order ",
-                icon: "success",
-                draggable: true
-            });
+
+            if (data.success) {
+                Swal.fire({
+                    title: "Order updated!",
+                    icon: "success",
+                    draggable: true
+                });
+
+                setSelectedProduct(prev => {
+                    const newState = { ...prev };
+                    delete newState[orderId];
+                    return newState;
+                });
+
+                dispatch(getfetchOrder());
+            }
         } catch (error) {
             console.error(error);
         }
