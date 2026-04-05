@@ -56,24 +56,24 @@ export function DailyOrder() {
 
 
     const fetchOrder = async (status?: string, date?: string) => {
-    try {
-        let url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/order/filter`;
+        try {
+            let url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/order/filter`;
 
-        const params = new URLSearchParams();
+            const params = new URLSearchParams();
 
-        if (status) params.append("status", status);
-        if (date) params.append("date", date);
+            if (status) params.append("status", status);
+            if (date) params.append("date", date);
 
-        url += `?${params.toString()}`;
+            url += `?${params.toString()}`;
 
-        const res = await fetch(url);
-        const data = await res.json();
+            const res = await fetch(url);
+            const data = await res.json();
 
-        setOrders(data.data || []);
-    } catch (error) {
-        console.error(error);
-    }
-};
+            setOrders(data.data || []);
+        } catch (error) {
+            console.error(error);
+        }
+    };
     useEffect(() => {
         fetchOrder()
     }, []);
@@ -110,25 +110,24 @@ export function DailyOrder() {
                     <Popover>
                         <PopoverTrigger>
                             <button className="px-3 py-2  text-black rounded-md shadow-sm transition border-2 border-gray-600 text-sm w-40">
-                                {date ? date.toLocaleDateString() : "Select Date"}
+                                {date ? date.toLocaleDateString("en-GB") : "Select Date"}
                             </button>
                         </PopoverTrigger>
                         <PopoverContent className="mx-auto p-3  rounded-xl shadow-md bg-[#ffff]">
-                             <Calendar
-                            mode="single"
-                            selected={date}
-                            onSelect={(selected) => {
-                                setDate(selected)
+                            <Calendar
+                                mode="single"
+                                selected={date}
+                                onSelect={(selected) => {
+                                    setDate(selected)
 
-                                if (selected) {
-                                    const formatted = selected.toISOString().split("T")[0]
-                                    setSelectedDate(formatted)
-
-                                    fetchOrder(selectedStatus, formatted)
-                                }
-                            }}
-                            className="rounded-md border"
-                        />
+                                    if (selected) {
+                                        const formatted = selected.toLocaleDateString("en-CA")
+                                        setSelectedDate(formatted)
+                                        fetchOrder(selectedStatus, formatted)
+                                    }
+                                }}
+                                className="rounded-md border"
+                            />
                         </PopoverContent>
                     </Popover>
                 </div>
