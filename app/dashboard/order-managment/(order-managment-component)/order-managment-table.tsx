@@ -145,8 +145,7 @@ export function OrderManagmentTable() {
                 productId: p.productId,
                 quantity: p.quentity,
             }));
-
-            const res = await fetch("https://envetory-api.vercel.app/order/item", {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/order/item`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

@@ -137,13 +137,13 @@ export function ProductSummaryTable() {
                                                         </FieldGroup>
                                                     </form>
 
-                                                    <CardFooter>
+                                                    <CardFooter >
                                                         <Field orientation="horizontal">
-                                                            <Button
+                                                            <Button 
                                                                 type="submit"
                                                                 form={`form-${pro.id}`} 
                                                                 className=" w-full rounded-full">
-                                                                Submit
+                                                                Add Quentity
                                                             </Button>
                                                         </Field>
                                                     </CardFooter>
