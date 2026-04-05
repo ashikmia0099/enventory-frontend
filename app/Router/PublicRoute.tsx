@@ -20,9 +20,9 @@ export default function PublicRoute({ children, publicPage }: RouteGuardProps) {
         if (publicPage) {
             if (user) {
                 if (user.role === "ADMIN") {
-                    router.push("/Dashboard/Users");
+                    router.push("/dashboard");
                 } else {
-                    router.push("/Dashboard");
+                    router.push("/dashboard/order-managment");
                 }
             } else {
                 setLoading(false);

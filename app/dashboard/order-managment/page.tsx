@@ -1,9 +1,13 @@
+import ProtectedRoute from '@/app/Router/ProtectedRoute'
 import { OrderManagmentTable } from './(order-managment-component)/order-managment-table'
 
 export default function page() {
   return (
-    <div>
-        <OrderManagmentTable/>
-    </div>
+    <ProtectedRoute>
+      <div>
+        <OrderManagmentTable />
+      </div>
+    </ProtectedRoute>
+
   )
 }

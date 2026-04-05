@@ -1,8 +1,12 @@
+import ProtectedRoute from '@/app/Router/ProtectedRoute'
 import { CategoryTable } from './(category-component)/categoryTable'
 export default function page() {
   return (
-    <div>
-       <CategoryTable/>
-    </div>
+    <ProtectedRoute role='ADMIN'>
+      <div>
+        <CategoryTable />
+      </div>
+    </ProtectedRoute>
+
   )
 }

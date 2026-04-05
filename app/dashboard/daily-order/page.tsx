@@ -1,9 +1,13 @@
+import ProtectedRoute from '@/app/Router/ProtectedRoute'
 import { DailyOrder } from './(daily-order-component)/daily-order'
 
 export default function page() {
   return (
-    <div>
-      <DailyOrder></DailyOrder>
-    </div>
+    <ProtectedRoute>
+      <div>
+        <DailyOrder></DailyOrder>
+      </div>
+    </ProtectedRoute>
+
   )
 }

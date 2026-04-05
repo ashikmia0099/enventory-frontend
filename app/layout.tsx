@@ -19,9 +19,7 @@ export default function RootLayout({ children } : {children :React.ReactNode}) {
     <html lang="en" className={lora.variable} data-theme="light">
       <body className="font-lora"> 
         <Provider store={store}>
-        
           {children}
-        
         </Provider>
       </body>
     </html>

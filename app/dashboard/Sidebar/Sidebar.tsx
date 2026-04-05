@@ -26,76 +26,63 @@ export default function Sidebar() {
     return (
         <div className=' p-2 pt-4 space-y-2'>
             {/* All User */}
-            {/* {
-                user?.role === "ADMIN" && ( */}
-                    <div>
-                        <Link href={"/dashboard/Users"}>
-                            <div className=' flex items-center gap-x-2 border border-gray-300 rounded-sm px-1 py-0.5'>
-                                <div>
-                                    <FaUsers className=' text-3xl text-black' />
+            {
+                user?.role === "ADMIN" && (
+                    <>
+                        <div>
+                            <Link href={"/dashboard/Users"}>
+                                <div className=' flex items-center gap-x-2 border border-gray-300 rounded-sm px-1 py-0.5'>
+                                    <div>
+                                        <FaUsers className=' text-3xl text-black' />
+                                    </div>
+                                    <div className=''>
+                                        <h4 className=' text-[16px] text-black font-semibold'>Users</h4>
+                                    </div>
                                 </div>
-                                <div className=''>
-                                    <h4 className=' text-[16px] text-black font-semibold'>Users</h4>
+                            </Link>
+                        </div>
+                        {/* Dashboard */}
+                        <div>
+                            <Link href={"/dashboard"}>
+                                <div className=' flex items-center gap-x-2 border border-gray-300 rounded-sm px-1 py-0.5'>
+                                    <div>
+                                        <FcPackage className=' text-3xl text-black' />
+                                    </div>
+                                    <div className=''>
+                                        <h4 className=' text-[16px] text-black font-semibold'>Dashboard</h4>
+                                    </div>
                                 </div>
-                            </div>
-                        </Link>
-                    </div>
-                {/* )
-            } */}
-          
-            {/* Dashboard */}
-            <div>
-                <Link href={"/dashboard"}>
-                    <div className=' flex items-center gap-x-2 border border-gray-300 rounded-sm px-1 py-0.5'>
+                            </Link>
+                        </div>
+                        {/* product category */}
                         <div>
-                            <FcPackage className=' text-3xl text-black' />
+                            <Link href={"/dashboard/category"}>
+                                <div className=' flex items-center gap-x-2 border border-gray-300 rounded-sm px-1 py-0.5'>
+                                    <div>
+                                        <FcPackage className=' text-3xl text-black' />
+                                    </div>
+                                    <div className=''>
+                                        <h4 className=' text-[16px] text-black font-semibold'>Product Category</h4>
+                                    </div>
+                                </div>
+                            </Link>
                         </div>
-                        <div className=''>
-                            <h4 className=' text-[16px] text-black font-semibold'>Dashboard</h4>
-                        </div>
-                    </div>
-                </Link>
-            </div>
-            {/* product category */}
-            <div>
-                <Link href={"/dashboard/category"}>
-                    <div className=' flex items-center gap-x-2 border border-gray-300 rounded-sm px-1 py-0.5'>
+                        {/* add Product */}
                         <div>
-                            <FcPackage className=' text-3xl text-black' />
+                            <Link href={"/dashboard/add-product"}>
+                                <div className=' flex items-center gap-x-2 border border-gray-300 rounded-sm px-1 py-0.5'>
+                                    <div>
+                                        <FcPackage className=' text-3xl text-black' />
+                                    </div>
+                                    <div className=''>
+                                        <h4 className=' text-[16px] text-black font-semibold'>Add Product</h4>
+                                    </div>
+                                </div>
+                            </Link>
                         </div>
-                        <div className=''>
-                            <h4 className=' text-[16px] text-black font-semibold'>Product Category</h4>
-                        </div>
-                    </div>
-                </Link>
-            </div>
-            {/* add Product */}
-            <div>
-                <Link href={"/dashboard/add-product"}>
-                    <div className=' flex items-center gap-x-2 border border-gray-300 rounded-sm px-1 py-0.5'>
-                        <div>
-                            <FcPackage className=' text-3xl text-black' />
-                        </div>
-                        <div className=''>
-                            <h4 className=' text-[16px] text-black font-semibold'>Add Product</h4>
-                        </div>
-                    </div>
-                </Link>
-            </div>
-            {/* all Product */}
-            <div>
-                <Link href={"/dashboard/all-product"}>
-                    <div className=' flex items-center gap-x-2 border border-gray-300 rounded-sm px-1 py-0.5'>
-                        <div>
-                            <FcPackage className=' text-3xl text-black' />
-                        </div>
-                        <div className=''>
-                            <h4 className=' text-[16px] text-black font-semibold'>All product</h4>
-                        </div>
-                    </div>
-                </Link>
-            </div>
-            {/* all order */}
+                    </>
+                )
+            }
             <div>
                 <Link href={"/dashboard/order"}>
                     <div className=' flex items-center gap-x-2 border border-gray-300 rounded-sm px-1 py-0.5'>
@@ -108,7 +95,7 @@ export default function Sidebar() {
                     </div>
                 </Link>
             </div>
-             {/* order managment */}
+            {/* order managment */}
             <div>
                 <Link href={"/dashboard/order-managment"}>
                     <div className=' flex items-center gap-x-2 border border-gray-300 rounded-sm px-1 py-0.5'>
@@ -121,7 +108,7 @@ export default function Sidebar() {
                     </div>
                 </Link>
             </div>
-             {/* daily order */}
+            {/* daily order */}
             <div>
                 <Link href={"/dashboard/daily-order"}>
                     <div className=' flex items-center gap-x-2 border border-gray-300 rounded-sm px-1 py-0.5'>
@@ -130,32 +117,6 @@ export default function Sidebar() {
                         </div>
                         <div className=''>
                             <h4 className=' text-[16px] text-black font-semibold'>Daily Order (Date or Status)</h4>
-                        </div>
-                    </div>
-                </Link>
-            </div>
-             {/* stock handeling */}
-            <div>
-                <Link href={"/dashboard/Seleted-Package"}>
-                    <div className=' flex items-center gap-x-2 border border-gray-300 rounded-sm px-1 py-0.5'>
-                        <div>
-                            <FcPackage className=' text-3xl text-black' />
-                        </div>
-                        <div className=''>
-                            <h4 className=' text-[16px] text-black font-semibold'>Stock Handling</h4>
-                        </div>
-                    </div>
-                </Link>
-            </div>
-             {/* reStock handlening */}
-            <div>
-                <Link href={"/dashboard/Seleted-Package"}>
-                    <div className=' flex items-center gap-x-2 border border-gray-300 rounded-sm px-1 py-0.5'>
-                        <div>
-                            <FcPackage className=' text-3xl text-black' />
-                        </div>
-                        <div className=''>
-                            <h4 className=' text-[16px] text-black font-semibold'>Restock Handeling</h4>
                         </div>
                     </div>
                 </Link>

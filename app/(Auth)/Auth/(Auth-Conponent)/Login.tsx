@@ -48,9 +48,9 @@ export function Login() {
     try {
       const result = await dispatch(LoginUser({ email: data.email, password: data.password })).unwrap();
       if (result.user.role === 'ADMIN') {
-        router.push("/Dashboard/Users")
+        router.push("/dashboard")
       } else {
-        router.push("/Dashboard")
+        router.push("/dashboard/order-managment")
       }
 
     } catch (err) {

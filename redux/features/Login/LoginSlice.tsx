@@ -39,8 +39,7 @@ export const LoginUser = createAsyncThunk<
     "auth/userLogin",
     async (data: LoginData, { rejectWithValue }) => {
         try {
-
-            const res = await fetch("https://envetory-api.vercel.app/auth/login", {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/login`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
