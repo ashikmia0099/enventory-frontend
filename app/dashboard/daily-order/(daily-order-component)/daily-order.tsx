@@ -76,7 +76,7 @@ export function DailyOrder() {
                 <div>
                     <Popover>
                         <PopoverTrigger>
-                            <button className="px-3 py-2 bg-blue-500 text-black rounded-md shadow-sm hover:bg-blue-600 transition border-2 border-gray-600 text-sm w-40">
+                            <button className="px-3 py-2  text-black rounded-md shadow-sm transition border-2 border-gray-600 text-sm w-40">
                                 {date ? date.toLocaleDateString() : "Select Date"}
                             </button>
                         </PopoverTrigger>
